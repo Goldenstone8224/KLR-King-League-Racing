@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drivers Lineup – KLR Season 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #000;
+      --surface: #0a0a0f;
+      --card: #0d0d18;
+      --border: #1a1a2e;
+      --blue: #2979ff;
+      --neon: #c6ff00;
+      --neon2: #00e5ff;
+      --text: #f0f0f0;
+      --muted: #666;
+      --radius: 6px;
+      --ff-d: 'Barlow Condensed', sans-serif;
+      --ff-b: 'Barlow', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff-b);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    /* Navigation Bar */
+    nav {
+      background: rgba(0, 0, 0, .92);
+      border-bottom: 2px solid var(--blue);
+      box-shadow: 0 0 24px rgba(41, 121, 255, .35);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px var(--blue));
+    }
+
+    .nav-logo-text {
+      font-family: var(--ff-d);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--blue);
+      text-shadow: 0 0 12px var(--blue);
+    }
+
+    .nav-logo-text span {
+      color: var(--neon);
+      text-shadow: 0 0 12px var(--neon);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--ff-d);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s, text-shadow .2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--blue);
+      text-shadow: 0 0 8px var(--blue);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: #000;
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(41, 121, 255, .15) 0%, transparent 70%), linear-gradient(180deg, #000 0%, #05050f 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--ff-d);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--neon);
+      text-shadow: 0 0 10px var(--neon);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-family: var(--ff-d);
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -1px;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(41, 121, 255, .4);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+      text-shadow: 0 0 20px var(--blue);
+    }
+
+    .hero-sub {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .checker-tape {
+      height: 12px;
+      background-image: repeating-linear-gradient(90deg, var(--neon) 0px, var(--neon) 12px, #000 12px, #000 24px);
+      opacity: .7;
+    }
+
+    /* Drivers Grid Container */
+    .drivers-container {
+      max-width: 1200px;
+      margin: 54px auto 80px;
+      padding: 0 24px;
+    }
+
+    .drivers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    /* Driver Card Base Styling */
+    .driver-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+      transition: all .25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .driver-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--team-color, var(--blue));
+    }
+
+    .driver-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--team-color, var(--blue));
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(var(--team-glow), 0.25);
+    }
+
+    /* Card Top Area */
+    .card-meta-top {
+      padding: 20px 20px 0;
+      display: flex;
+      justify-content: flex-end;
+      position: relative;
+      z-index: 10;
+    }
+
+    .driver-flag {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    /* Side-by-Side Dual Image Zone */
+    .driver-portrait-zone {
+      height: 180px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 12px;
+      background: linear-gradient(180deg, transparent, rgba(10, 10, 15, 0.55));
+    }
+    
+    .driver-img {
+      height: 95%;
+      width: 45%;
+      object-fit: contain;
+      position: relative;
+      z-index: 3;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.5));
+    }
+
+    .car-img {
+      height: auto;
+      width: 52%;
+      max-height: 75%;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      align-self: center;
+      transform: translateY(10px);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6));
+      transition: transform .3s ease;
+    }
+
+    .driver-card:hover .car-img {
+      transform: scale(1.05) translate(3px, 10px);
+    }
+
+    .big-number {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+      font-family: var(--ff-d);
+      font-size: 105px;
+      font-weight: 900;
+      line-height: 0.8;
+      color: rgba(255, 255, 255, 0.025);
+      letter-spacing: -4px;
+      pointer-events: none;
+      z-index: 1;
+      transition: color .25s;
+    }
+
+    .driver-card:hover .big-number {
+      color: rgba(var(--team-glow), 0.06);
+    }
+
+    /* Identity Area Layout */
+    .driver-identity {
+      padding: 18px 20px 15px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 5;
+    }
+
+    .driver-tag-name {
+      font-family: var(--ff-d);
+      font-size: 28px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .driver-team-title {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    /* Telemetry Stats Area Layout */
+    .driver-stats-row {
+      padding: 16px 20px;
+      background: rgba(0, 0, 0, 0.2);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      text-align: center;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-box label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .stat-box .value {
+      font-family: var(--ff-d);
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-box .value.highlight {
+      color: var(--team-color);
+      text-shadow: 0 0 8px rgba(var(--team-glow), 0.3);
+    }
+
+    /* Footer styling */
+    footer {
+      background: #000;
+      border-top: 1px solid var(--border);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo-wrap img {
+      height: 40px;
+      filter: drop-shadow(0 0 8px var(--blue));
+    }
+
+    .footer-title {
+      font-family: var(--ff-d);
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--blue);
+      text-shadow: 0 0 12px rgba(41, 121, 255, .5);
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    @media(max-width: 640px) {
+      .nav-links { display: none; }
+      .drivers-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="images/New%20Project.png" alt="KLR" />
+      <div class="nav-logo-text">KLR <span>Racing</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="standings.html">Standings</a></li>
+      <li><a href="index.html">Results</a></li>
+      <li><a href="drivers.html" class="active">Drivers</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">King League Racing</div>
+    <h1>Season <em>1</em> Grid</h1>
+    <div class="hero-sub">Official Driver Profiles &amp; Stats</div>
+  </div>
+</div>
+<div class="checker-tape"></div>
+
+<main class="drivers-container">
+  <div class="drivers-grid">
+
+    <!-- 1. McLAREN MASTERCARD (Roman) -->
+    <div class="driver-card" style="--team-color: #ff8700; --team-glow: 255, 135, 0;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇦🇷</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/roman.png" alt="Roman" />
+        <img class="car-img" src="images/cars/mclaren.png" alt="McLaren Car" onerror="this.style.opacity='0.2';" />
+        <div class="big-number">5</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">Roman</div>
+        <div class="driver-team-title">McLaren Mastercard</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">0</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">2</div></div>
+      </div>
+    </div>
+
+    <!-- 2. MERCEDES-AMG PETRONAS (Ash) -->
+    <div class="driver-card" style="--team-color: #00a19c; --team-glow: 0, 161, 156;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇳z</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/ash.png" alt="Ash" onerror="this.src='images/New%20Project.png'; this.style.opacity='0.15'; this.style.height='50%';" />
+        <img class="car-img" src="images/cars/mercedes.png" alt="Mercedes Car" onerror="this.style.opacity='0.2';" />
+        <div class="big-number">72</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">Ash</div>
+        <div class="driver-team-title">Mercedes-AMG PETRONAS</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">2</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">2</div></div>
+      </div>
+    </div>
+    
+            <!-- 6. HAAS (Michael) -->
+    <div class="driver-card" style="--team-color: #ffff; --team-glow: 100, 100, 100;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇿🇦</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/michael.png" alt="James" />
+        <img class="car-img" src="images/cars/haas.png" alt="VCARB Car"/>
+        <div class="big-number">42</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">Michael</div>
+        <div class="driver-team-title">MoneyGram Haas</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">0</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">0</div></div>
+      </div>
+    </div>
+
+    <!-- 3. ORACLE RED BULL RACING (Finn) -->
+    <div class="driver-card" style="--team-color: #031451; --team-glow: 54, 127, 169;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇳z</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/finn.png" alt="Finn"  />
+        <img class="car-img" src="images/cars/red%20bull.png" alt="Red Bull Car"/>
+        <div class="big-number">25</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">Finn</div>
+        <div class="driver-team-title">Oracle Red Bull Racing</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">0</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">1</div></div>
+      </div>
+    </div>
+      
+      <!-- 5. Red Bulls (Austin) -->
+    <div class="driver-card" style="--team-color: #031451; --team-glow: 54, 127, 169;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇳🇿</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/austin.png" alt="James" />
+        <img class="car-img" src="images/cars/red%20bull.png" alt="VCARB Car"/>
+        <div class="big-number">69</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">Austin</div>
+        <div class="driver-team-title">Oracle Red Bull Racing</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">0</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">0</div></div>
+      </div>
+    </div>
+
+    <!-- 4. VISA CASH APP RB (James) -->
+    <div class="driver-card" style="--team-color: #ffff; --team-glow: 54, 127, 169;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇳🇿</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/james.png" alt="James" onerror="this.src='images/New%20Project.png'; this.style.opacity='0.15'; this.style.height='50%';" />
+        <img class="car-img" src="images/cars/vcarb.png" alt="VCARB Car" onerror="this.style.opacity='0.2';" />
+        <div class="big-number">30</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">James</div>
+        <div class="driver-team-title">Visa Cash App Racing Bulls</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">0</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">1</div></div>
+      </div>
+    </div>
+      
+      <!-- 4. VISA CASH APP RB (Lucas) -->
+    <div class="driver-card" style="--team-color: #0079C1; --team-glow: 100, 100, 100;">
+      <div class="card-meta-top">
+        <span class="driver-flag">🇳🇿</span>
+      </div>
+      <div class="driver-portrait-zone">
+        <img class="driver-img" src="images/drivers/lucas.png" alt="James" />
+        <img class="car-img" src="images/cars/williams.png" alt="VCARB Car" />
+        <div class="big-number">90</div>
+      </div>
+      <div class="driver-identity">
+        <div class="driver-tag-name">Lucas</div>
+        <div class="driver-team-title">Atlassian Williams Racing</div>
+      </div>
+      <div class="driver-stats-row">
+        <div class="stat-box"><label>Wins</label><div class="value">0</div></div>
+        <div class="stat-box"><label>Podiums</label><div class="value">0</div></div>
+      </div>
+    </div>
+      
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo-wrap">
+    <img src="klr-logo.png" alt="KLR" onerror="this.style.display='none'" />
+    <div class="footer-title">King League Racing</div>
+  </div>
+  <p>Season 1 · All rights reserved · KLR</p>
+</footer>
+
+</body>
+</html>
